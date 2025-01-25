@@ -7,6 +7,8 @@ import dev.telegrambot.storage.domain.exception.ResourceNotFoundException;
 import dev.telegrambot.storage.domain.user.User;
 import dev.telegrambot.storage.repository.ApplicationRepository;
 import dev.telegrambot.storage.service.ApplicationService;
+import dev.telegrambot.storage.service.CourseService;
+import dev.telegrambot.storage.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,6 +27,8 @@ import java.util.UUID;
 public class ApplicationServiceImpl implements ApplicationService {
 
     private final ApplicationRepository applicationRepository;
+    private final CourseService courseService;
+    private final UserService userService;
 
     @Override
     @Transactional
@@ -41,10 +45,10 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     @Transactional
     public Application createApplication(Application application, UUID courseId, UUID userId) {
-        Course course = application.getCourse();
-        User user = application.getUser();
-        course.setId(courseId);
-        user.setId(userId);
+        Course course = courseService.getCourse(courseId);
+        User user = userService.getUserById(userId);
+        application.setCourse(course);
+        application.setUser(user);
         return applicationRepository.save(application);
     }
 

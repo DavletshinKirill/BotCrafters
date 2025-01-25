@@ -47,4 +47,3 @@ logging:
 
 frontend:
   host: ${FRONTEND_HOST:localhost}
-  port: ${FRONTEND_PO}

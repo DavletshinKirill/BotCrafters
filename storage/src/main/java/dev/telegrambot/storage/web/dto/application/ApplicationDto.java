@@ -9,7 +9,6 @@ import dev.telegrambot.storage.domain.enums.ApplicationStatus;
 import dev.telegrambot.storage.web.dto.course.CourseDto;
 import dev.telegrambot.storage.web.dto.user.RegisteredUserDto;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,17 +23,16 @@ import java.util.UUID;
 public class ApplicationDto {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @NotNull(message = "Id must be not null.")
     private UUID id;
 
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime createdAt;
 
-    @NotNull(message = "Пользователь обязателен")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private RegisteredUserDto user;
 
-    @NotNull(message = "Курс обязателен")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private CourseDto course;
 
     @Schema(description = "Статус заявки",
