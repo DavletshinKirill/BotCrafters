@@ -2,6 +2,10 @@ package dev.telegrambot.storage.web.dto.course;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import dev.telegrambot.storage.domain.enums.CourseStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -9,7 +13,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -20,21 +23,19 @@ import java.util.UUID;
 @Schema($schema = "Course DTO")
 public class CourseDto {
 
-    @NotNull(message = "Id must be not null.")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private UUID id;
 
     @NotBlank(message = "Название курса обязательно")
     private String courseName;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     @NotNull(message = "Начало курса обязательно")
     private LocalDateTime startDate;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @NotNull(message = "Конец курса обязателен")
+    @NotNull(message = "Начало курса обязательно")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime endDate;
 
     @Schema(description = "Статус курса",
