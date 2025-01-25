@@ -40,15 +40,15 @@ public class AdminController {
     }
 
     @Operation(summary = "Обновление Username")
-    @PatchMapping("/{adminUserId}")
+    @PatchMapping("/email/{adminUserId}")
     public AdminUserDto updateAdminUserByUsername(@PathVariable UUID adminUserId, @RequestBody String email) {
         AdminUser adminUser = adminService.updateAdminUserEmail(adminUserId, email);
         return adminUserMapper.toDTO(adminUser);
     }
 
     @Operation(summary = "Обновление Password")
-    @PatchMapping("/{adminUserId}")
-    public AdminUserDto updateAdminUserByPassord(@PathVariable UUID adminUserId, @RequestBody String password) {
+    @PatchMapping("/password/{adminUserId}")
+    public AdminUserDto updateAdminUserByPassword(@PathVariable UUID adminUserId, @RequestBody String password) {
         AdminUser adminUser = adminService.updateAdminUserPassword(adminUserId, password);
         return adminUserMapper.toDTO(adminUser);
     }

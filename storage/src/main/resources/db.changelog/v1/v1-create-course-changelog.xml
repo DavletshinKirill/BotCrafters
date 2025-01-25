@@ -21,7 +21,7 @@
             <column name="id" type="UUID">
                 <constraints primaryKey="true" nullable="false" primaryKeyName="pk_courses"/>
             </column>
-            <column name="name" type="VARCHAR(255)">
+            <column name="course_name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
             <column name="url" type="VARCHAR(225)" defaultValue="https://neostudy.neoflex.ru">
@@ -31,6 +31,7 @@
                 <constraints checkConstraint="CHECK (status IN ('OPENED', 'NOT_STARTED', 'CLOSED'))" nullable="false"/>
             </column>
         </createTable>
-        <addUniqueConstraint tableName="courses" columnNames="name, start_date"   constraintName="unique_application_on_course_for_user"/>
+        <addUniqueConstraint tableName="courses" columnNames="course_name, start_date"
+                             constraintName="unique_application_on_course_for_user"/>
     </changeSet>
 </databaseChangeLog>

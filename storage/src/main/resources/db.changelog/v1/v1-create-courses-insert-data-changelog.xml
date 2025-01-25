@@ -9,7 +9,7 @@
     <changeSet id="v1-4" author="db.username">
         <insert tableName="courses">
             <column name="id" value="09d40257-c523-403c-95be-ce957852227d"/> <!-- Пример UUID -->
-            <column name="name" value="Java"/>
+            <column name="course_name" value="Java"/>
             <column name="start_date" valueDate="2023-01-01T00:00:00.000Z"/> <!-- Пример даты -->
             <column name="end_date" valueDate="2023-12-31T23:59:59.999Z"/> <!-- Пример даты -->
             <column name="status" value="OPENED"/>

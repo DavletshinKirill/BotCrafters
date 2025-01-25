@@ -1,8 +1,8 @@
 package dev.telegrambot.storage.web.controller;
 
-import dev.telegrambot.storage.domain.user.User;
 import dev.telegrambot.storage.service.BotService;
 import dev.telegrambot.storage.service.CourseService;
+import dev.telegrambot.storage.web.dto.user.RegisteredUserDto;
 import dev.telegrambot.storage.web.mappers.user.RegisteredUserMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,14 +23,21 @@ public class BotController {
     private final BotService botService;
     private final CourseService courseService;
 
+    // TODO переделай
     @Operation(summary = "Create User", description = "Create 4 offers")
     @PostMapping("/{courseName}")
-    public String createUser(@PathVariable String courseName, @RequestBody ChangingRegisteredUserDto userDto) {
-        log.info(userDto.toString());
-        User user = userMapper.toEntity(userDto);
-        botService.createUser(user, courseName);
-        // TODO Узнай, на что должна быть ссылка
-        return "Some string with reference";
+    public String createUser(@PathVariable String courseName, @RequestBody RegisteredUserDto userDto) {
+//        log.info(userDto.toString());
+//        User user = userMapper.toEntity(userDto);
+//        try {
+//            botService.createUser(user, courseName);
+//        }
+//        catch (UserAlreadyExist e) {
+//            User savedUser = e.getUser();
+//            return userMapper.toDTO(savedUser);
+//        }
+//        return "Some string with reference";
+        return "Переделай";
     }
 
     @Operation(summary = "Get All names", description = "Get All courses names")
