@@ -23,7 +23,7 @@ public class AdminUserDto {
     private String lastName;
 
     @NotBlank(message = "Фамилия пользователя обязательна")
-    private String firstname;
+    private String firstName;
 
     @NotBlank(message = "Имя пользователя обязательно")
     private String email;

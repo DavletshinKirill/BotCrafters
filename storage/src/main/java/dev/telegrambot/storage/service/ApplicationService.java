@@ -10,7 +10,8 @@ import java.util.UUID;
 
 public interface ApplicationService {
     Application createApplication(User user, Course course);
-    Application createApplication(Application application);
+
+    Application createApplication(Application application, UUID courseId, UUID userId);
 
     List<Application> getApplications(int offset, int limit);
     Application getApplication(UUID applicationId);

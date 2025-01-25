@@ -1,7 +1,10 @@
 package dev.telegrambot.storage.web.dto.application;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import dev.telegrambot.storage.domain.enums.ApplicationStatus;
 import dev.telegrambot.storage.web.dto.course.CourseDto;
 import dev.telegrambot.storage.web.dto.user.RegisteredUserDto;
@@ -10,7 +13,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -25,12 +27,8 @@ public class ApplicationDto {
     @NotNull(message = "Id must be not null.")
     private UUID id;
 
-    @DateTimeFormat(
-            iso = DateTimeFormat.ISO.DATE
-    )
-    @JsonFormat(
-            pattern = "yyyy-MM-dd"
-    )
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime createdAt;
 
     @NotNull(message = "Пользователь обязателен")

@@ -40,7 +40,11 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     @Transactional
-    public Application createApplication(Application application) {
+    public Application createApplication(Application application, UUID courseId, UUID userId) {
+        Course course = application.getCourse();
+        User user = application.getUser();
+        course.setId(courseId);
+        user.setId(userId);
         return applicationRepository.save(application);
     }
 

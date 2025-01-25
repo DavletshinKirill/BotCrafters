@@ -1,6 +1,5 @@
 package dev.telegrambot.storage.web.dto.course;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -29,13 +28,17 @@ public class CourseDto {
     @NotBlank(message = "Название курса обязательно")
     private String courseName;
 
+    @NotBlank(message = "Название курса обязательно")
+    private String url;
+
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @NotNull(message = "Начало курса обязательно")
     private LocalDateTime startDate;
 
     @NotNull(message = "Начало курса обязательно")
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime endDate;
 
     @Schema(description = "Статус курса",

@@ -47,10 +47,10 @@ public class ApplicationController {
     }
 
     @Operation(summary = "Создание новой заявки")
-    @PostMapping
-    public ApplicationDto createApplication(@RequestBody @Valid ApplicationDto applicationChangingDto) {
+    @PostMapping("/{user_id}/{course_id}")
+    public ApplicationDto createApplication(@PathVariable UUID user_id, @PathVariable UUID course_id, @RequestBody @Valid ApplicationDto applicationChangingDto) {
         Application application = applicationMapper.toEntity(applicationChangingDto);
-        Application createdApplication = applicationService.createApplication(application);
+        Application createdApplication = applicationService.createApplication(application, course_id, user_id);
         return applicationMapper.toDTO(createdApplication);
     }
 }
