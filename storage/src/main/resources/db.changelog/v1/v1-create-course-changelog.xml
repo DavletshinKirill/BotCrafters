@@ -18,9 +18,6 @@
             <column name="end_date" type="TIMESTAMP(6)">
                 <constraints nullable="false"/>
             </column>
-            <column name="end_date" type="TIMESTAMP(6)">
-                <constraints nullable="false"/>
-            </column>
             <column name="id" type="UUID">
                 <constraints primaryKey="true" nullable="false" primaryKeyName="pk_courses"/>
             </column>
