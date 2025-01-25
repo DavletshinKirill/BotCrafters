@@ -54,6 +54,4 @@ public class UserController {
         User createdUser = userService.createUser(user);
         return registeredUserMapper.toDTO(createdUser);
     }
-
-
 }

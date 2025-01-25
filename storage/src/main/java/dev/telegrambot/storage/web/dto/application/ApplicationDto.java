@@ -25,8 +25,12 @@ public class ApplicationDto {
     @NotNull(message = "Id must be not null.")
     private UUID id;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(
+            iso = DateTimeFormat.ISO.DATE
+    )
+    @JsonFormat(
+            pattern = "yyyy-MM-dd"
+    )
     private LocalDateTime createdAt;
 
     @NotNull(message = "Пользователь обязателен")

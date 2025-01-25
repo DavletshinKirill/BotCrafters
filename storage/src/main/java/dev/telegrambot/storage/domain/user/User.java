@@ -24,7 +24,7 @@ public class User {
     private String lastName;
 
     @Column(name = "first_name")
-    private String firstname;
+    private String firstName;
 
 
     @Column(name = "phone")

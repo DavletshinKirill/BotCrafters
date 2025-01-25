@@ -5,10 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.telegrambot.storage.domain.enums.Roles;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -18,7 +16,6 @@ import java.util.UUID;
 @Schema($schema = "Registered User DTO")
 public class RegisteredUserDto {
 
-    @NotNull(message = "Id must be not null.")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private UUID id;
 
@@ -34,11 +31,10 @@ public class RegisteredUserDto {
     private String email;
 
     @Schema(description = "Роль пользователя",
-            example = "PRE_APPLICATION",
-            allowableValues = {"PRE_APPLICATION", "PROCESSING", "REFUSED", "ACCEPTED"})
+            example = "VISITOR",
+            allowableValues = {"VISITOR", "CANDIDATE", "EXTERNAL_USER"})
     private Roles role;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime registrationDate;
 }

@@ -31,7 +31,7 @@ public class CourseController {
         return courseMapper.toDTO(course);
     }
 
-    @Operation(summary = "Получение списка направлений по обучению (курсов)й")
+    @Operation(summary = "Получение списка направлений по обучению (курсов)")
     @GetMapping()
     public List<CourseDto> getCourses(@RequestParam int offset, @RequestParam int limit) {
         List<Course> courses = courseService.getAllCourses(offset, limit);
