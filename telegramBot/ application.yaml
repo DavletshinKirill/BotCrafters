@@ -1,3 +1,21 @@
 application:
   start-date: "2025-01-01"
   end-date: "2025-02-10"
+
+telegram:
+  bot:
+    username: "YourBotUsername"
+    token: "YourBotToken"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,prometheus
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+  endpoint:
+    prometheus:
+      enabled: true

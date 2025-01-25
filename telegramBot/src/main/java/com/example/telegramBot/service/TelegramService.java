@@ -14,11 +14,28 @@ public class TelegramService {
         this.microservice1Client = microservice1Client;
     }
 
+    // Обработка сообщения с получением статуса
     public String handleMessage(String message, Long chatId) {
-        // Пример логики обработки сообщения
         if (message.equalsIgnoreCase("Статус базы данных")) {
-            return microservice1Client.getDatabaseStatus();  // Используем FeignClient
+            return microservice1Client.getDatabaseStatus();
         }
         return "Неизвестное сообщение";
+    }
+
+    // Новый метод для проверки состояния кнопок
+    public String getButtonStatus() {
+        return "Кнопки активны: " + (isApplicationOpen() ? "Да" : "Нет");
+    }
+
+    // Новый метод для отправки уведомлений
+    public String sendNotificationsToAll(String message) {
+        // Тут будет логика отправки уведомлений всем пользователям
+        return "Уведомление отправлено: " + message;
+    }
+
+    // Логика для проверки статуса подачи заявки (можно перенести в ApplicationDateService)
+    private boolean isApplicationOpen() {
+        // Реализуем логику, которая будет использовать ApplicationDateService
+        return true; // Пример
     }
 }

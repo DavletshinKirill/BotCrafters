@@ -1,5 +1,7 @@
 package com.example.telegramBot.service;
 
+import com.example.telegramBot.feignclient.Microservice1Client;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -7,12 +9,15 @@ import java.time.LocalDate;
 @Service
 public class ApplicationDateService {
 
-    // Примерные даты набора
-    private final LocalDate startDate = LocalDate.of(2025, 1, 1);
-    private final LocalDate endDate = LocalDate.of(2025, 2, 31);
+    private final Microservice1Client microservice1Client;
+
+    @Autowired
+    public ApplicationDateService(Microservice1Client microservice1Client) {
+        this.microservice1Client = microservice1Client;
+    }
 
     public boolean isApplicationOpen() {
-        LocalDate currentDate = LocalDate.now();
-        return !currentDate.isBefore(startDate) && !currentDate.isAfter(endDate);
+        String status = microservice1Client.getDatabaseStatus();  // Получаем статус от микросервиса №1
+        return "open".equalsIgnoreCase(status);  // Проверяем, открыт ли набор
     }
 }
