@@ -16,6 +16,10 @@
         <checkstyle.version>3.3.1</checkstyle.version>
     </properties>
 
+    <modules>
+        <module>storage</module>
+    </modules>
+
 
     <build>
         <plugins>

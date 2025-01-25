@@ -1,0 +1,61 @@
+package dev.telegrambot.storage.service.impl;
+
+import dev.telegrambot.storage.domain.exception.UserAlreadyExist;
+import dev.telegrambot.storage.domain.exception.UserNotFoundException;
+import dev.telegrambot.storage.domain.user.User;
+import dev.telegrambot.storage.repository.UserRepository;
+import dev.telegrambot.storage.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
+
+@Service
+@RequiredArgsConstructor
+public class UserServiceImpl implements UserService {
+
+    private final UserRepository userRepository;
+
+    @Override
+    public User createUser(User user) {
+        try {
+            User savedUser = getUserByEmail(user.getEmail());
+            throw new UserAlreadyExist(String.format("User with email: %s doesn't exist", user
+                    .getEmail()), savedUser);
+        } catch (UserNotFoundException e) {
+            return userRepository.save(user);
+        }
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(
+                () -> new UserNotFoundException(String.format("User with email: %s doesn't exist", email))
+        );
+    }
+
+    @Override
+    public User getUserById(UUID id) {
+        return userRepository.findById(id).orElseThrow(
+                () -> new UserNotFoundException(String.format("User with id: %s doesn't exist", id))
+        );
+    }
+
+    @Override
+    public void deleteUserById(UUID id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    public List<User> getAllUsers(int offset, int limit) {
+        Pageable pageable = PageRequest.of(offset, limit);
+        Page<User> postPage = userRepository.findAll(pageable);
+        return postPage.hasContent() ? new ArrayList<>(postPage.getContent()) : Collections.emptyList();
+    }
+}

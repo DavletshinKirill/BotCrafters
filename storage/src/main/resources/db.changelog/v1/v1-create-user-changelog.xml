@@ -1,0 +1,43 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <property name="db.username" value="${POSTGRES_USERNAME}"/>
+
+    <changeSet id="v1-1" author="db.username">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="registered_users"/>
+            </not>
+        </preConditions>
+        <createTable tableName="registered_users">
+            <column name="last_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_registered_users"/>
+            </column>
+            <column name="phone" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="VARCHAR(15)">
+                <constraints checkConstraint="CHECK (role IN ('VISITOR', 'CANDIDATE', 'EXTERNAL_USER'))"
+                             nullable="false"/>
+            </column>
+            <column name="registration_date" type="TIMESTAMP(6)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
