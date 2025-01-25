@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     public User createUser(User user) {
         try {
             User savedUser = getUserByEmail(user.getEmail());
-            throw new UserAlreadyExist(String.format("User with email: %s doesn't exist", user
+            throw new UserAlreadyExist(String.format("User with email: %s exist", user
                     .getEmail()), savedUser);
         } catch (UserNotFoundException e) {
             return userRepository.save(user);
@@ -48,14 +48,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUserById(UUID id) {
-        userRepository.deleteById(id);
-    }
-
-    @Override
     public List<User> getAllUsers(int offset, int limit) {
         Pageable pageable = PageRequest.of(offset, limit);
-        Page<User> postPage = userRepository.findAll(pageable);
-        return postPage.hasContent() ? new ArrayList<>(postPage.getContent()) : Collections.emptyList();
+        Page<User> usersPage = userRepository.findAll(pageable);
+        return usersPage.hasContent() ? new ArrayList<>(usersPage.getContent()) : Collections.emptyList();
     }
 }

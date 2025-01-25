@@ -13,6 +13,9 @@
         </preConditions>
         <createTable tableName="courses">
             <column name="start_date" type="TIMESTAMP(6)">
+                <constraints nullable="false" />
+            </column>
+            <column name="end_date" type="TIMESTAMP(6)">
                 <constraints nullable="false"/>
             </column>
             <column name="end_date" type="TIMESTAMP(6)">
@@ -24,9 +27,13 @@
             <column name="name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
+            <column name="url" type="VARCHAR(225)" defaultValue="https://neostudy.neoflex.ru">
+                <constraints nullable="false"/>
+            </column>
             <column name="status" type="VARCHAR(20)">
                 <constraints checkConstraint="CHECK (status IN ('OPENED', 'NOT_STARTED', 'CLOSED'))" nullable="false"/>
             </column>
         </createTable>
+        <addUniqueConstraint tableName="courses" columnNames="name, start_date"   constraintName="unique_application_on_course_for_user"/>
     </changeSet>
 </databaseChangeLog>

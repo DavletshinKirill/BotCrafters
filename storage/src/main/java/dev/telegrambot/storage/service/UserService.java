@@ -12,7 +12,6 @@ public interface UserService {
 
     User getUserById(UUID id);
 
-    void deleteUserById(UUID id);
-
     List<User> getAllUsers(int offset, int limit);
+
 }

@@ -4,7 +4,7 @@ import dev.telegrambot.storage.domain.user.User;
 
 public class UserAlreadyExist extends RuntimeException {
 
-    private final User user;
+    private User user;
 
     public UserAlreadyExist(String message, User user) {
         super(message);

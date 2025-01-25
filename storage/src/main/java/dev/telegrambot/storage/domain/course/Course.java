@@ -23,6 +23,9 @@ public class Course {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "url")
+    private String url;
+
     @Column(name = "start_date")
     private LocalDateTime startDate;
 
