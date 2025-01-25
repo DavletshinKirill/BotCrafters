@@ -10,10 +10,12 @@ import org.springframework.stereotype.Service;
 public class CommandProcessor {
 
     private final TelegramService telegramService;
+    private final TelegramBot telegramBot;  // Внедряем TelegramBot
 
     @Autowired
-    public CommandProcessor(TelegramService telegramService) {
+    public CommandProcessor(TelegramService telegramService, TelegramBot telegramBot) {
         this.telegramService = telegramService;
+        this.telegramBot = telegramBot;
     }
 
     public void processCommand(Long chatId, String command) {
@@ -31,7 +33,8 @@ public class CommandProcessor {
         // Вызов метода из TelegramService для получения статуса базы данных
         String status = telegramService.handleMessage("Статус базы данных", chatId);
         log.info("Sending status to chatId: {}", chatId);
-        // Здесь отправка полученного статус обратно пользователю
+        // Используем TelegramBot для отправки полученного статуса обратно пользователю
+        telegramBot.sendResponse(chatId, status);  // Вот здесь вызываем sendResponse
     }
 
     public void processCallback(Long chatId, String callbackData) {

@@ -1,6 +1,5 @@
 package com.example.telegramBot.bot;
 
-import com.example.telegramBot.service.TelegramService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +28,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         telegramUpdateHandler.processUpdate(update);  // Используем TelegramUpdateHandler для обработки обновлений
     }
 
-    private void sendResponse(Long chatId, String message) {
+    public void sendResponse(Long chatId, String message) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chatId);
         sendMessage.setText(message);
