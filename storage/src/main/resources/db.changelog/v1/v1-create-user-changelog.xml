@@ -29,7 +29,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="email" type="VARCHAR(255)">
-                <constraints nullable="false"/>
+                <constraints nullable="false" unique="true"/>
             </column>
             <column name="role" type="VARCHAR(15)">
                 <constraints checkConstraint="CHECK (role IN ('VISITOR', 'CANDIDATE', 'EXTERNAL_USER'))"

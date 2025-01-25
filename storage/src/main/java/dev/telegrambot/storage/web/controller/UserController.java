@@ -5,6 +5,7 @@ import dev.telegrambot.storage.service.UserService;
 import dev.telegrambot.storage.web.dto.user.ChangingRegisteredUserDto;
 import dev.telegrambot.storage.web.dto.user.RegisteredUserDto;
 import dev.telegrambot.storage.web.mappers.user.ChangingRegisteredMapper;
+import dev.telegrambot.storage.web.mappers.user.RegisteredUserMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -24,35 +25,37 @@ public class UserController {
 
     private final UserService userService;
     private final ChangingRegisteredMapper userMapper;
+    private final RegisteredUserMapper registeredUserMapper;
 
     @Operation(summary = "Get User", description = "Get User")
     @GetMapping("{user_id}")
     public RegisteredUserDto getUser(UUID user_id) {
         User user = userService.getUserById(user_id);
-        return userMapper.toDTO(user);
+        return registeredUserMapper.toDTO(user);
     }
 
     @Operation(summary = "Get Users", description = "Get Users")
     @GetMapping()
-    public List<ChangingRegisteredUserDto> getUsers(@RequestParam int offset, @RequestParam int limit) {
+    public List<RegisteredUserDto> getUsers(@RequestParam int offset, @RequestParam int limit) {
         List<User> user = userService.getAllUsers(offset, limit);
-        return userMapper.toDTO(user);
+        return registeredUserMapper.toDTO(user);
     }
 
     @Operation(summary = "updateUser", description = "Update User")
-    @PutMapping
-    public ChangingRegisteredUserDto updateUser(@RequestBody @Valid ChangingRegisteredUserDto userDto) {
+    @PutMapping("{user_id}")
+    public RegisteredUserDto updateUser(@PathVariable UUID user_id, @RequestBody @Valid ChangingRegisteredUserDto userDto) {
         User user = userMapper.toEntity(userDto);
+        user.setId(user_id);
         User updateUser = userService.createUser(user);
-        return userMapper.toDTO(updateUser);
+        return registeredUserMapper.toDTO(updateUser);
     };
 
     @Operation(summary = "createUser", description = "Create User")
     @PostMapping
-    public ChangingRegisteredUserDto createUser(@RequestBody @Valid ChangingRegisteredUserDto userDto) {
+    public RegisteredUserDto createUser(@RequestBody @Valid ChangingRegisteredUserDto userDto) {
         User user = userMapper.toEntity(userDto);
         User createdUser = userService.createUser(user);
-        return userMapper.toDTO(createdUser);
+        return registeredUserMapper.toDTO(createdUser);
     }
 
 

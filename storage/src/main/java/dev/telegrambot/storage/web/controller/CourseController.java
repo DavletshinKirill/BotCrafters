@@ -1,16 +1,9 @@
 package dev.telegrambot.storage.web.controller;
 
-import dev.telegrambot.storage.domain.application.Application;
 import dev.telegrambot.storage.domain.course.Course;
-import dev.telegrambot.storage.domain.enums.ApplicationStatus;
-import dev.telegrambot.storage.service.ApplicationService;
 import dev.telegrambot.storage.service.CourseService;
-import dev.telegrambot.storage.web.dto.application.ApplicationChangingDto;
-import dev.telegrambot.storage.web.dto.application.ApplicationDto;
-import dev.telegrambot.storage.web.dto.course.ChangingCourseDto;
+import dev.telegrambot.storage.web.dto.course.CourseChangingDto;
 import dev.telegrambot.storage.web.dto.course.CourseDto;
-import dev.telegrambot.storage.web.mappers.application.ApplicationChangingMapper;
-import dev.telegrambot.storage.web.mappers.application.ApplicationMapper;
 import dev.telegrambot.storage.web.mappers.course.ChangingCourseMapper;
 import dev.telegrambot.storage.web.mappers.course.CourseMapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -50,7 +43,7 @@ public class CourseController {
 
     @Operation(summary = "Обновление данных о курсе (только для администратора)")
     @PatchMapping("{course_id}")
-    public CourseDto updateApplication(@RequestBody ChangingCourseDto changingCourseDto, @PathVariable UUID course_id) {
+    public CourseDto updateApplication(@RequestBody CourseChangingDto changingCourseDto, @PathVariable UUID course_id) {
         Course course = changingCourseMapper.toEntity(changingCourseDto);
         course.setId(course_id);
         Course updatedCourses = courseService.createCourse(course);
@@ -59,7 +52,7 @@ public class CourseController {
 
     @Operation(summary = "Создание нового курса (только для администратора)")
     @PostMapping
-    public CourseDto createApplication(@RequestBody @Valid ChangingCourseDto changingCourseDto) {
+    public CourseDto createApplication(@RequestBody @Valid CourseChangingDto changingCourseDto) {
         Course course = changingCourseMapper.toEntity(changingCourseDto);
         Course createdCourse = courseService.createCourse(course);
         return courseMapper.toDTO(createdCourse);

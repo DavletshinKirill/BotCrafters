@@ -4,13 +4,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import dev.telegrambot.storage.domain.enums.CourseStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
-public class ChangingCourseDto {
+public class CourseChangingDto {
 
 
     @NotBlank(message = "Название курса обязательно")
