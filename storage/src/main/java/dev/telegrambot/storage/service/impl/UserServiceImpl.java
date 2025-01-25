@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,6 +24,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
+    @Transactional
     public User createUser(User user) {
         try {
             User savedUser = getUserByEmail(user.getEmail());
@@ -34,6 +36,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow(
                 () -> new UserNotFoundException(String.format("User with email: %s doesn't exist", email))
@@ -41,6 +44,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User getUserById(UUID id) {
         return userRepository.findById(id).orElseThrow(
                 () -> new UserNotFoundException(String.format("User with id: %s doesn't exist", id))
@@ -48,6 +52,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<User> getAllUsers(int offset, int limit) {
         Pageable pageable = PageRequest.of(offset, limit);
         Page<User> usersPage = userRepository.findAll(pageable);

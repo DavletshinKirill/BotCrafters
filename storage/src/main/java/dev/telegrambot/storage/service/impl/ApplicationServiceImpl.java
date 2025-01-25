@@ -1,8 +1,8 @@
 package dev.telegrambot.storage.service.impl;
 
 import dev.telegrambot.storage.domain.application.Application;
-import dev.telegrambot.storage.domain.enums.ApplicationStatus;
 import dev.telegrambot.storage.domain.course.Course;
+import dev.telegrambot.storage.domain.enums.ApplicationStatus;
 import dev.telegrambot.storage.domain.exception.ResourceNotFoundException;
 import dev.telegrambot.storage.domain.user.User;
 import dev.telegrambot.storage.repository.ApplicationRepository;
@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     private final ApplicationRepository applicationRepository;
 
     @Override
+    @Transactional
     public Application createApplication(User user, Course course) {
         Application application = Application.builder()
                 .createdAt(LocalDateTime.now())
@@ -37,11 +39,13 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
+    @Transactional
     public Application createApplication(Application application) {
         return applicationRepository.save(application);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Application> getApplications(int offset, int limit) {
         Pageable pageable = PageRequest.of(offset, limit);
         Page<Application> coursesPage = applicationRepository.findAll(pageable);
@@ -49,6 +53,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Application getApplication(UUID applicationId) {
         return applicationRepository.findById(applicationId).orElseThrow(
                 () -> new ResourceNotFoundException(String.format("Application with id %s not found", applicationId))
@@ -56,6 +61,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
+    @Transactional
     public Application updateApplicationStatus(UUID applicationId, ApplicationStatus status) {
         Application application = getApplication(applicationId);
         application.setStatus(status);

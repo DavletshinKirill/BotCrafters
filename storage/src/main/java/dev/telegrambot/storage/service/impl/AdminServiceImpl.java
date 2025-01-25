@@ -10,19 +10,22 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+
+// TODO транзакции
 @Service
 @RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
 
     private final AdminUserRepository adminUserRepository;
 
-
+    @Transactional(readOnly = true)
     public AdminUser getAdminUser(UUID adminId) {
         return adminUserRepository.findById(adminId).orElseThrow(
                 () -> new ResourceNotFoundException(String.format("AdminUser with id %s not found", adminId))
@@ -30,6 +33,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @Transactional
     public AdminUser updateAdminUserEmail(UUID uuid, String email) {
         AdminUser adminUser = getAdminUser(uuid);
         if (adminUserRepository.findByEmail(email).isEmpty()) {
@@ -39,6 +43,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @Transactional
     public AdminUser updateAdminUserPassword(UUID uuid, String password) {
         AdminUser adminUser = getAdminUser(uuid);
         adminUser.setPassword(password);
@@ -46,11 +51,13 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @Transactional
     public AdminUser crerateAdminUser(AdminUser adminUser) {
         return adminUserRepository.save(adminUser);
     }
 
     @Override
+    @Transactional
     public List<AdminUser> getAdminUser(int offset, int limit) {
         Pageable pageable = PageRequest.of(offset, limit);
         Page<AdminUser> adminUserPage = adminUserRepository.findAll(pageable);

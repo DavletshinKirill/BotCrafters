@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public Course getCourse(String courseName) {
         return courseRepository.findByCourseName(courseName).orElseThrow(
                 () -> new CourseNotFoundException(String.format("Course with name %s not found", courseName))
@@ -31,12 +33,14 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<String> getAllCoursesTitle() {
         List<Course> courses = courseRepository.findAll();
         return courses.stream().map(Course::getCourseName).toList();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Course> getAllCourses(int offset, int limit) {
         Pageable pageable = PageRequest.of(offset, limit);
         Page<Course> coursesPage = courseRepository.findAll(pageable);
@@ -44,6 +48,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional
     public Course createCourse(Course course) {
         try {
             getCourseByNameAndDateStart(course.getCourseName(), course.getStartDate());
@@ -54,13 +59,15 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Course getCourse(UUID courseId) {
         return courseRepository.findById(courseId).orElseThrow(
                 () -> new CourseNotFoundException(String.format("Course with id %s not found", courseId))
         );
     }
 
-    private Course getCourseByNameAndDateStart(String courseName, LocalDateTime startDate) {
+    @Transactional(readOnly = true)
+    protected Course getCourseByNameAndDateStart(String courseName, LocalDateTime startDate) {
         return courseRepository.findCourseByCourseNameAndStartDate(courseName, startDate).orElseThrow(
                 () -> new CourseNotFoundException(String.format("Course with name %s and startDate %s not found", courseName, startDate.toString()))
         );

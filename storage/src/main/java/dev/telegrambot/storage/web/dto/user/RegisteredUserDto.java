@@ -6,11 +6,16 @@ import dev.telegrambot.storage.domain.enums.Roles;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Data
+@AllArgsConstructor
+@Schema($schema = "Registered User DTO")
 public class RegisteredUserDto {
 
     @NotNull(message = "Id must be not null.")

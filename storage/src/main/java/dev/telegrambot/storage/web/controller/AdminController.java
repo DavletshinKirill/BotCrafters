@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+// Response Entity
 @RestController
 @RequestMapping("/admin/admin_users")
 @Tag(name = "AdminUsers", description = "Управление пользователями")
