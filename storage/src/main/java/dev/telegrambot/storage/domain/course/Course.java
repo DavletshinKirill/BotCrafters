@@ -20,8 +20,8 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "course_name")
+    private String courseName;
 
     @Column(name = "url")
     private String url;

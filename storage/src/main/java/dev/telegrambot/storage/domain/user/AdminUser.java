@@ -21,7 +21,7 @@ public class AdminUser {
     private String lastName;
 
     @Column(name = "name")
-    private String name;
+    private String first_name;
 
     @Column(name = "email")
     private String email;

@@ -2,13 +2,8 @@ package dev.telegrambot.storage.web.controller;
 
 import dev.telegrambot.storage.domain.application.Application;
 import dev.telegrambot.storage.domain.enums.ApplicationStatus;
-import dev.telegrambot.storage.domain.user.User;
 import dev.telegrambot.storage.service.ApplicationService;
-import dev.telegrambot.storage.web.dto.application.ApplicationChangingDto;
 import dev.telegrambot.storage.web.dto.application.ApplicationDto;
-import dev.telegrambot.storage.web.dto.user.ChangingRegisteredUserDto;
-import dev.telegrambot.storage.web.dto.user.RegisteredUserDto;
-import dev.telegrambot.storage.web.mappers.application.ApplicationChangingMapper;
 import dev.telegrambot.storage.web.mappers.application.ApplicationMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,7 +24,6 @@ public class ApplicationController {
 
     private final ApplicationService applicationService;
     private final ApplicationMapper applicationMapper;
-    private final ApplicationChangingMapper applicationChangingMapper;
 
     @Operation(summary = "Получение информации о заявке")
     @GetMapping("{application_id}")
@@ -50,12 +44,12 @@ public class ApplicationController {
     public ApplicationDto updateApplication(@RequestBody ApplicationStatus applicationStatus, @PathVariable UUID application_id) {
         Application updatedApplication = applicationService.updateApplicationStatus(application_id, applicationStatus);
         return applicationMapper.toDTO(updatedApplication);
-    };
+    }
 
     @Operation(summary = "Создание новой заявки")
     @PostMapping
-    public ApplicationDto createApplication(@RequestBody @Valid ApplicationChangingDto applicationChangingDto) {
-        Application application = applicationChangingMapper.toEntity(applicationChangingDto);
+    public ApplicationDto createApplication(@RequestBody @Valid ApplicationDto applicationChangingDto) {
+        Application application = applicationMapper.toEntity(applicationChangingDto);
         Application createdApplication = applicationService.createApplication(application);
         return applicationMapper.toDTO(createdApplication);
     }

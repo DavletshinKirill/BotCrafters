@@ -2,9 +2,7 @@ package dev.telegrambot.storage.web.controller;
 
 import dev.telegrambot.storage.domain.user.User;
 import dev.telegrambot.storage.service.UserService;
-import dev.telegrambot.storage.web.dto.user.ChangingRegisteredUserDto;
 import dev.telegrambot.storage.web.dto.user.RegisteredUserDto;
-import dev.telegrambot.storage.web.mappers.user.ChangingRegisteredMapper;
 import dev.telegrambot.storage.web.mappers.user.RegisteredUserMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,7 +22,6 @@ import java.util.UUID;
 public class UserController {
 
     private final UserService userService;
-    private final ChangingRegisteredMapper userMapper;
     private final RegisteredUserMapper registeredUserMapper;
 
     @Operation(summary = "Get User", description = "Get User")
@@ -43,17 +40,17 @@ public class UserController {
 
     @Operation(summary = "updateUser", description = "Update User")
     @PutMapping("{user_id}")
-    public RegisteredUserDto updateUser(@PathVariable UUID user_id, @RequestBody @Valid ChangingRegisteredUserDto userDto) {
-        User user = userMapper.toEntity(userDto);
+    public RegisteredUserDto updateUser(@PathVariable UUID user_id, @RequestBody @Valid RegisteredUserDto userDto) {
+        User user = registeredUserMapper.toEntity(userDto);
         user.setId(user_id);
         User updateUser = userService.createUser(user);
         return registeredUserMapper.toDTO(updateUser);
-    };
+    }
 
     @Operation(summary = "createUser", description = "Create User")
     @PostMapping
-    public RegisteredUserDto createUser(@RequestBody @Valid ChangingRegisteredUserDto userDto) {
-        User user = userMapper.toEntity(userDto);
+    public RegisteredUserDto createUser(@RequestBody @Valid RegisteredUserDto userDto) {
+        User user = registeredUserMapper.toEntity(userDto);
         User createdUser = userService.createUser(user);
         return registeredUserMapper.toDTO(createdUser);
     }

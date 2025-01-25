@@ -1,6 +1,7 @@
 package dev.telegrambot.storage.web.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.telegrambot.storage.domain.enums.Roles;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -13,10 +14,11 @@ import java.util.UUID;
 public class RegisteredUserDto {
 
     @NotNull(message = "Id must be not null.")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private UUID id;
 
     @NotBlank(message = "Имя пользователя обязательно")
-    private String name;
+    private String firstName;
     @NotBlank(message = "Фамилия пользователя обязательна")
     private String lastName;
     @NotBlank(message = "Имя пользователя обязательно")

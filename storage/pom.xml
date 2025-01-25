@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.2</version>
+        <version>3.3.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>dev.telegramBot</groupId>
@@ -29,6 +29,7 @@
     <properties>
         <java.version>21</java.version>
         <hibernate.validator.version>8.0.1.Final</hibernate.validator.version>
+        <jakarta-validation.version>3.0.2</jakarta-validation.version>
         <springdoc.version>2.6.0</springdoc.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <liquibase.version>4.30.0</liquibase.version>
@@ -106,6 +107,12 @@
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>${jakarta-validation.version}</version>
         </dependency>
     </dependencies>
 

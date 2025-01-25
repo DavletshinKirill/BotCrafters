@@ -1,6 +1,7 @@
 package dev.telegrambot.storage.web.dto.application;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.telegrambot.storage.domain.enums.ApplicationStatus;
 import dev.telegrambot.storage.web.dto.course.CourseDto;
 import dev.telegrambot.storage.web.dto.user.RegisteredUserDto;
@@ -20,6 +21,7 @@ import java.util.UUID;
 @Schema($schema = "Application DTO")
 public class ApplicationDto {
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @NotNull(message = "Id must be not null.")
     private UUID id;
 

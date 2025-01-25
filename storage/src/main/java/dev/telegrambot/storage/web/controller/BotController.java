@@ -3,8 +3,7 @@ package dev.telegrambot.storage.web.controller;
 import dev.telegrambot.storage.domain.user.User;
 import dev.telegrambot.storage.service.BotService;
 import dev.telegrambot.storage.service.CourseService;
-import dev.telegrambot.storage.web.dto.user.ChangingRegisteredUserDto;
-import dev.telegrambot.storage.web.mappers.user.ChangingRegisteredMapper;
+import dev.telegrambot.storage.web.mappers.user.RegisteredUserMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +19,7 @@ import java.util.List;
 @Slf4j
 public class BotController {
 
-    private final ChangingRegisteredMapper userMapper;
+    private final RegisteredUserMapper userMapper;
     private final BotService botService;
     private final CourseService courseService;
 

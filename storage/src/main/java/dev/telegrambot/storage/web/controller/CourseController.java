@@ -2,9 +2,7 @@ package dev.telegrambot.storage.web.controller;
 
 import dev.telegrambot.storage.domain.course.Course;
 import dev.telegrambot.storage.service.CourseService;
-import dev.telegrambot.storage.web.dto.course.CourseChangingDto;
 import dev.telegrambot.storage.web.dto.course.CourseDto;
-import dev.telegrambot.storage.web.mappers.course.ChangingCourseMapper;
 import dev.telegrambot.storage.web.mappers.course.CourseMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,7 +23,6 @@ public class CourseController {
 
     private final CourseService courseService;
     private final CourseMapper courseMapper;
-    private final ChangingCourseMapper changingCourseMapper;
 
     @Operation(summary = "Получение информации о курсе")
     @GetMapping("{course_id}")
@@ -43,17 +40,17 @@ public class CourseController {
 
     @Operation(summary = "Обновление данных о курсе (только для администратора)")
     @PatchMapping("{course_id}")
-    public CourseDto updateApplication(@RequestBody CourseChangingDto changingCourseDto, @PathVariable UUID course_id) {
-        Course course = changingCourseMapper.toEntity(changingCourseDto);
+    public CourseDto updateApplication(@RequestBody CourseDto changingCourseDto, @PathVariable UUID course_id) {
+        Course course = courseMapper.toEntity(changingCourseDto);
         course.setId(course_id);
         Course updatedCourses = courseService.createCourse(course);
         return courseMapper.toDTO(updatedCourses);
-    };
+    }
 
     @Operation(summary = "Создание нового курса (только для администратора)")
     @PostMapping
-    public CourseDto createApplication(@RequestBody @Valid CourseChangingDto changingCourseDto) {
-        Course course = changingCourseMapper.toEntity(changingCourseDto);
+    public CourseDto createApplication(@RequestBody @Valid CourseDto changingCourseDto) {
+        Course course = courseMapper.toEntity(changingCourseDto);
         Course createdCourse = courseService.createCourse(course);
         return courseMapper.toDTO(createdCourse);
     }
