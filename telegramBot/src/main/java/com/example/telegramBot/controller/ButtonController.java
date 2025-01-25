@@ -1,12 +1,13 @@
 package com.example.telegramBot.controller;
 
 import com.example.telegramBot.service.ApplicationDateService;
+import com.example.telegramBot.swagger.ButtonControllerSwagger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/buttons")
-public class ButtonController {
+public class ButtonController implements ButtonControllerSwagger {
 
     private final ApplicationDateService applicationDateService;
 
@@ -15,6 +16,7 @@ public class ButtonController {
         this.applicationDateService = applicationDateService;
     }
 
+    @Override
     @GetMapping("/status")
     public String getApplicationStatus() {
         if (applicationDateService.isApplicationOpen()) {
@@ -24,6 +26,7 @@ public class ButtonController {
         }
     }
 
+    @Override
     @PostMapping("/submit-application")
     public String submitApplication(@RequestParam String userId) {
         if (applicationDateService.isApplicationOpen()) {
